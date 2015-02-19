@@ -13,7 +13,7 @@ Tweaks on bash, zsh, vim, tmux, etc on CentOS
 cp -a /etc ~/backups/etc-$(date +%F)-linux-tweaks
 
 # get the source from Github
-cd $HOME && git clone --recursive git://github.com/pothi/linux-tweaks.git
+cd $HOME && git clone --recursive git://github.com/pothi/linux-tweaks-centos.git
 
 # Shell related configs
 cd ~/linux-tweaks; cp tiny_* /etc/profile.d/
