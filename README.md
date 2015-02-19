@@ -4,10 +4,11 @@ Linux-Tweaks
 Tweaks on bash, zsh, vim, tmux, etc on CentOS
 
 ## Install procedure
-# yum install zsh zsh-html -y
 
 ```bash
 # as root
+# yum install zsh zsh-html -y
+
 # take a backup
 cp -a /etc ~/backups/etc-$(date +%F)-linux-tweaks
 
