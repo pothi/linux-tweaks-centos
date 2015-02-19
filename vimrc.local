@@ -8,9 +8,9 @@
 syntax on
 
 " Pathogen
-if has("autocmd")
-    execute pathogen#infect()
-endif
+" if has("autocmd")
+    " execute pathogen#infect()
+" endif
 
 " -----------------------------------------------------------------------------------------------
 
