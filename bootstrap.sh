@@ -3,10 +3,10 @@
 # Tweaks on bash, zsh, vim, tmux, etc on CentOS
 
 # as root
-if [[ $USER != "root" ]]; then
-	echo "This script must be run as root"
-	exit 1
-fi
+# if [[ $USER != "root" ]]; then
+	# echo "This script must be run as root"
+	# exit 1
+# fi
 
 # install dependencies
 echo 'Installing dependencies...'
