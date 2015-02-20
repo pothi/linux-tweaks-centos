@@ -9,7 +9,8 @@ if [[ $USER != "root" ]]; then
 fi
 
 # install dependencies
-yum install zsh zsh-html git -y
+echo 'Installing dependencies...'
+yum install zsh zsh-html git vim -y -q
 
 # take a backup
 LT_DIRECTORY="~/backups/etc-$(date +%F)-linux-tweaks"
@@ -27,8 +28,7 @@ cat ~/lt/zprofile > /etc/zprofile
 cat ~/lt/zshrc > /etc/zshrc
 
 # Vim related configs
-cat ~/lt/vimrc.local > /etc/vim/vimrc.local
-# cp -a ~/lt/vim/* /usr/share/vim/vimcurrent/
+cat ~/lt/vimrc.local > /etc/vimrc
 cp -a ~/lt/vim/* /usr/share/vim/vim74/
 
 # Common for all users
@@ -57,7 +57,6 @@ chsh --shell /bin/zsh
 # chsh --shell /bin/zsh client
 
 #### Update Pathogen (optional)
-# curl -Sso /usr/share/vim/vimcurrent/autoload/pathogen.vim https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim
 curl -Sso /usr/share/vim/vim74/autoload/pathogen.vim https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim
 
 # logout and then login to see the changes
