@@ -12,6 +12,7 @@ fi
 echo 'Installing dependencies...'
 yum install zsh zsh-html git vim -y -q
 
+mkdir ~/{backups,log}
 # take a backup
 LT_DIRECTORY="~/backups/etc-$(date +%F)-linux-tweaks"
 if [ ! -d "$LT_DIRECTORY" ]; then
