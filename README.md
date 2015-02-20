@@ -7,7 +7,7 @@ Tweaks on bash, zsh, vim, tmux, etc on CentOS
 
 ```bash
 mkdir ~/scripts
-curl -Sso ~/scripts/bootstrap_lt.sh https://raw.githubusercontent.com/pothi/linux-tweaks-centos/master/bootstrap.sh
+curl -Sso ~/scripts/bootstrap_lt.sh https://raw.githubusercontent.com/pothi/linux-tweaks-centos/master/scripts/bootstrap-lt.sh
 chmod +x ~/scripts/bootstrap_lt.sh
 
 # go through the script to understand what it does. you are warned!
