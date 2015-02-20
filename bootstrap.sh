@@ -12,11 +12,13 @@ fi
 echo 'Installing dependencies...'
 yum install zsh zsh-html git vim -y -q
 
-mkdir ~/{backups,log}
+mkdir ~/backups &> /dev/null
+mkdir -p ~/backups/{files,databases} ~/{log,tmp,others,scripts} &> /dev/null
+
 # take a backup
-LT_DIRECTORY="~/backups/etc-$(date +%F)-linux-tweaks"
+LT_DIRECTORY="/root/backups/etc-$(date +%F)-linux-tweaks"
 if [ ! -d "$LT_DIRECTORY" ]; then
-	mkdir $LT_DIRECTORY && cp -a /etc "$_"
+	cp -a /etc $LT_DIRECTORY
 fi
 
 # get the source from Github
