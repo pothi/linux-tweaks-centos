@@ -16,7 +16,7 @@ mkdir ~/{backups,log}
 # take a backup
 LT_DIRECTORY="~/backups/etc-$(date +%F)-linux-tweaks"
 if [ ! -d "$LT_DIRECTORY" ]; then
-	cp -a /etc $LT_DIRECTORY
+	mkdir $LT_DIRECTORY && cp -a /etc "$_"
 fi
 
 # get the source from Github
