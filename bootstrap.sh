@@ -10,6 +10,7 @@ fi
 
 # install dependencies
 echo 'Installing dependencies...'
+yum update -y -q
 yum install zsh zsh-html git vim -y -q
 
 mkdir ~/backups &> /dev/null
