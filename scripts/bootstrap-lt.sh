@@ -3,13 +3,14 @@
 # Tweaks on bash, zsh, vim, tmux, etc on CentOS
 
 # as root
-if [[ $USER != "root" ]]; then
-	echo "This script must be run as root"
-	exit 1
-fi
+# if [[ $USER != "root" ]]; then
+	# echo "This script must be run as root"
+	# exit 1
+# fi
 
 # install dependencies
 echo 'Installing dependencies...'
+yum update -y -q
 yum install zsh zsh-html git vim -y -q
 
 mkdir ~/backups &> /dev/null
