@@ -27,11 +27,11 @@ git clone --recursive https://github.com/pothi/linux-tweaks-centos.git ~/ltc
 
 # Shell related configs
 cp ~/ltc/tiny_* /etc/profile.d/
-cat ~/ltc/zprofile > /etc/zprofile
-cat ~/ltc/zshrc > /etc/zshrc
+cat ~/ltc/zprofile >> /etc/zprofile
+cat ~/ltc/zshrc >> /etc/zshrc
 
 # Vim related configs
-cat ~/ltc/vimrc.local > /etc/vimrc
+cat ~/ltc/vimrc.local >> /etc/vimrc
 cp -a ~/ltc/vim/* /usr/share/vim/vim74/
 
 # Common for all users
