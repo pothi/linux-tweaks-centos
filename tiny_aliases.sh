@@ -3,19 +3,19 @@
 
 # Aliases for `ls`
 
-alias ls='ls --color=never --group-directories-first --classify'
-alias l='ls --color=never --group-directories-first --classify'
+alias ls='ls --color=auto --group-directories-first --classify'
+alias l='ls --color=auto --group-directories-first --classify'
 # use the following if --color=auto did not work
 # alias l='ls --color=always --group-directories-first --classify'
 # if OS sets up colors and to get rid of colors, use --color=never
 
 alias la='l --almost-all'
 alias ld='l -ld'
-alias ll='l -l' 
+alias ll='l -lh' 
 alias lh='l -lh'
 
-alias lal='l -l --almost-all'
-alias lla='l -l --almost-all'
+alias lal='l -lh --almost-all'
+alias lla='l -lh --almost-all'
 alias llh='l -lh'
 alias lah='l -h --almost-all'
 alias lalh='l -lh --almost-all'
