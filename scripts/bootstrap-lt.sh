@@ -11,7 +11,7 @@
 # install dependencies
 echo 'Installing dependencies...'
 yum update -y -q
-yum install zsh zsh-html git vim -y -q
+yum install zsh zsh-html git vim bind-utils zip -y -q
 
 mkdir ~/{backups,log,tmp,others,scripts} &> /dev/null
 
