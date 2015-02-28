@@ -46,5 +46,8 @@ alias digc='dig +short CNAME'
 alias digns='dig +short NS'
 alias digmx='dig +short MX'
 
+# Nginx
+alias ngx_flags='nginx -V 2>&1 | /bin/sed "s: --:\n\t&:g"'
+
 ### end of custom aliases by pothi ###
 
