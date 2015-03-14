@@ -13,7 +13,7 @@ echo 'Installing dependencies...'
 yum update -y -q
 yum install zsh zsh-html git vim bind-utils zip -y -q
 
-mkdir ~/{backups,log,tmp,others,scripts} &> /dev/null
+mkdir ~/{backups,log,tmp,others,scripts,git,src} &> /dev/null
 
 # take a backup
 LT_DIRECTORY="/root/backups/etc-$(date +%F)-linux-tweaks-centos"
