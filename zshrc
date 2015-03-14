@@ -26,8 +26,8 @@ setopt SHARE_HISTORY
 
 # Aliases for `ls`
 
-alias ls='ls --color=never --group-directories-first --classify'
-alias l='ls --color=never --group-directories-first --classify'
+alias ls='ls --color=auto --group-directories-first --classify'
+alias l='ls --color=auto --group-directories-first --classify'
 # use the following if --color=auto did not work
 # alias l='ls --color=always --group-directories-first --classify'
 # use --color=never, to turn off colors
