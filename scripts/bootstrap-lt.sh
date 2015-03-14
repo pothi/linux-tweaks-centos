@@ -56,6 +56,7 @@ rm -rf ~/ltc/
 
 # Change Shell
 chsh --shell /bin/zsh
+sed -i 's/bash/zsh/' /etc/default/useradd
 
 #### Update Pathogen (optional)
 curl -Sso /usr/share/vim/vim74/autoload/pathogen.vim https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim
