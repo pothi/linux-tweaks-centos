@@ -37,7 +37,7 @@ yum install -y zsh zsh-html \
 	python-pip \
 	logwatch postfix \
 	fail2ban \
-	ruby ruby-gems ruby-devel libxml2-devel libxslt-devel \
+	ruby ruby-gems ruby-devel libxml2-devel libxslt-devel gcc-c++ \
 	yum-cron \
 	&>> /root/log/linux-tweaks.log
 
@@ -127,7 +127,9 @@ fi
 echo 'Install Ruby Gems... please be patient'
 echo 'Install Ruby Gems... please be patient' >> /root/log/linux-tweaks.log
 gem install nokogiri -N &>> /root/log/linux-tweaks.log
-gem install backup -N &>> /root/log/linux-tweaks.log
+if [ "$?" == "0" ]; then
+	gem install backup -N &>> /root/log/linux-tweaks.log
+fi
 
 
 # logout and then login to see the changes
