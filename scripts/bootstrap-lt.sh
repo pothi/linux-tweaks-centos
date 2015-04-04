@@ -37,7 +37,7 @@ yum install -y zsh zsh-html \
 	python-pip \
 	logwatch postfix \
 	fail2ban \
-	ruby ruby-gems ruby-devel \
+	ruby ruby-gems ruby-devel libxml2-devel libxslt-devel \
 	yum-cron \
 	&>> /root/log/linux-tweaks.log
 
