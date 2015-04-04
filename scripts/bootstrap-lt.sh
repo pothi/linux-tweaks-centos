@@ -103,8 +103,8 @@ curl -Sso /usr/share/vim/vim74/autoload/pathogen.vim https://raw.github.com/tpop
 echo 'Downloading ps_mem.py, mysqltuner and tuning-primer, etc'
 echo 'Downloading ps_mem.py, mysqltuner and tuning-primer, etc' >> /root/log/linux-tweaks.log
 wget -q -O /root/ps_mem.py http://www.pixelbeat.org/scripts/ps_mem.py && chmod +x /root/ps_mem.py &>> /root/log/linux-tweaks.log
-wget -q -O /root/scripts/mysqltuner.pl https://raw.github.com/major/MySQLTuner-perl/master/mysqltuner.pl && chmod +x /root/mysqltuner.pl &>> /root/log/linux-tweaks.log
-wget -q -O /root/scripts/tuning-primer.sh https://launchpad.net/mysql-tuning-primer/trunk/1.6-r1/+download/tuning-primer.sh && chmod +x /root/tuning-primer.sh &>> /root/log/linux-tweaks.log
+wget -q -O /root/scripts/mysqltuner.pl https://raw.github.com/major/MySQLTuner-perl/master/mysqltuner.pl && chmod +x /root/scripts/mysqltuner.pl &>> /root/log/linux-tweaks.log
+wget -q -O /root/scripts/tuning-primer.sh https://launchpad.net/mysql-tuning-primer/trunk/1.6-r1/+download/tuning-primer.sh && chmod +x /root/scripts/tuning-primer.sh &>> /root/log/linux-tweaks.log
 
 
 # Setup wp cli
