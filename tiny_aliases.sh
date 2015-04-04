@@ -49,5 +49,9 @@ alias digmx='dig +short MX'
 # Nginx
 alias ngx_flags='nginx -V 2>&1 | /bin/sed "s: --:\n\t&:g"'
 
+# Some shortcuts
+alias wp='/usr/local/bin/wp'
+alias backup='/usr/local/bin/backup'
+
 ### end of custom aliases by pothi ###
 
