@@ -123,4 +123,14 @@ if [ ! -d "$LT_DIRECTORY" ]; then
 	cp -a /etc $LT_DIRECTORY
 fi
 
+
+echo 'Install Ruby Gems... please be patient'
+echo 'Install Ruby Gems... please be patient' >> /root/log/linux-tweaks.log
+gem install nokogiri -N &>> /root/log/linux-tweaks.log
+gem install backup -N &>> /root/log/linux-tweaks.log
+
+
 # logout and then login to see the changes
+echo 'All done.'
+echo 'You may logout and then log back in to see all the changes'
+echo
