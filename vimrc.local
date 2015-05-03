@@ -17,13 +17,13 @@ syntax on
 " indentation - purely with hard tabs
 set tabstop=4
 set shiftwidth=4
-set noexpandtab
+" set noexpandtab
 " tip - :%retab! to convert spaces to tabs
 
 " while editing content for Github - purely without hard tabs
 " ref: http://vim.wikia.com/wiki/Indenting_source_code
-" set expandtab
-" set softtabstop=4
+set expandtab
+set softtabstop=4
 " :%retab to replace existing tabs to spaces
 
 " indentation
