@@ -13,7 +13,7 @@ mkdir ~/{backups,git,log,others,scripts,src,tmp} &> /dev/null
 # take a backup
 echo 'Taking an initial backup'
 echo 'Taking an initial backup' >> /root/log/linux-tweaks.log
-LT_DIRECTORY="/root/backups/etc-$(date +%F)-linux-tweaks-centos7-before"
+LT_DIRECTORY="/root/backups/etc-linux-tweaks-centos7-before-$(date +%F)"
 if [ ! -d "$LT_DIRECTORY" ]; then
 	cp -a /etc $LT_DIRECTORY
 fi
@@ -118,7 +118,7 @@ mv wp-cli.phar /usr/local/bin/wp &>> /root/log/linux-tweaks.log
 # take a backup, after doing everything
 echo 'Taking a final backup'
 echo 'Taking a final backup' >> /root/log/linux-tweaks.log
-LT_DIRECTORY="/root/backups/etc-$(date +%F)-linux-tweaks-centos7-after"
+LT_DIRECTORY="/root/backups/etc-linux-tweaks-centos7-after-$(date +%F)"
 if [ ! -d "$LT_DIRECTORY" ]; then
 	cp -a /etc $LT_DIRECTORY
 fi
