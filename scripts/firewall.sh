@@ -37,7 +37,12 @@ firewall-cmd --permanent --add-service=https
 
 firewall-cmd --list-all
 
+systemctl restart fail2ban
+# http://www.fail2ban.org/wiki/index.php/Commands
+# check status
+# fail2ban-client status sshd
+# unban IP
+# fail2ban-client set sshd unbanip 45.56.116.200
+
 echo 'All done. If you see any error message, contact pothi'
 echo
-
-# TODO: setup fail2ban

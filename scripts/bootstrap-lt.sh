@@ -26,6 +26,7 @@ yum update -y -q &>> /root/log/linux-tweaks.log
 
 echo 'Install prerequisites'
 echo 'Install prerequisites' >> /root/log/linux-tweaks.log
+yum install -y epel-release &>> /root/log/linux-tweaks.log
 yum install -y zsh zsh-html \
 	tmux \
 	gcc \
@@ -36,7 +37,7 @@ yum install -y zsh zsh-html \
 	mlocate \
 	python-pip \
 	logwatch postfix \
-	fail2ban \
+	fail2ban-firewalld fail2ban-systemd \
 	ruby ruby-gems ruby-devel libxml2-devel libxslt-devel gcc-c++ \
 	yum-cron \
 	&>> /root/log/linux-tweaks.log
@@ -114,6 +115,21 @@ curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.pha
 chmod +x wp-cli.phar &>> /root/log/linux-tweaks.log
 mv wp-cli.phar /usr/local/bin/wp &>> /root/log/linux-tweaks.log
 
+
+# Setup fail2ban
+# ref: https://krash.be/node/28
+echo 'Setting up fail2ban'
+echo 'Setting up fail2ban' >> /root/log/linux-tweaks.log
+echo '[DEFAULT]
+findtime  = 5000
+[sshd]
+enabled = true' > /etc/fail2ban/jail.local
+
+echo '[Init]
+bantime = 10000' > /etc/fail2ban/action.d/firewallcmd-ipset.local
+
+systemctl enable fail2ban
+systemctl start fail2ban
 
 # take a backup, after doing everything
 echo 'Taking a final backup'
