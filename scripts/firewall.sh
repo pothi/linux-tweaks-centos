@@ -1,6 +1,21 @@
 #!/bin/bash
 
 # Sets up firewall and open common ports (aka services)
+# this isn't needed on certain hosts such as AWS, GCE
+# where the hosts have firewall on top of the OS
+
+echo
+
+# make sure firewall isn't running
+# if the following command shows an error message
+# we are good to go
+firewall-cmd --list-all
+# error message
+# FirewallD is not running
+if [ "$?" == "0" ]; then
+	echo 'Firewall seems running. So, exiting prematurely'
+	echo
+fi
 
 # as root
 if [[ $USER != "root" ]]; then
@@ -12,7 +27,17 @@ fi
 systemctl enable firewalld
 systemctl start firewalld
 
+echo 'Adding port 80'
 firewall-cmd --add-service=http
-firewall-cmd --add-service=https
 firewall-cmd --permanent --add-service=http
+
+echo 'Adding port 443'
+firewall-cmd --add-service=https
 firewall-cmd --permanent --add-service=https
+
+firewall-cmd --list-all
+
+echo 'All done. If you see any error message, contact pothi'
+echo
+
+# TODO: setup fail2ban
