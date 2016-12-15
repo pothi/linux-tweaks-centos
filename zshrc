@@ -8,11 +8,11 @@ prompt walters
 setopt PROMPT_SUBST
 # export PROMPT="%B%(?..[%?] )%b%n@%U$(hostname -f | awk -F . '{print $2"."$3}')%u> "
 export PROMPT=%B%\(\?..\[%\?\]\ \)%b%n@%U%M%u\>\ 
-# PROMPT=%B%\(\?..\[%\?\]\ \)%b%n@%U$(hostname -f | awk -F $(hostname). '{print $2}')%u\>\  
+# export PROMPT=%B%\(\?..\[%\?\]\ \)%b%n@%U$(hostname -f | awk -F $(hostname). '{print $2}')%u\>\  
 
 #-- History Tweaks --#
-HISTSIZE=1000
-SAVEHIST=1000
+HISTSIZE=10000
+SAVEHIST=10000
 
 setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_IGNORE_SPACE
@@ -33,29 +33,26 @@ alias l='ls --color=auto --group-directories-first --classify'
 # use --color=never, to turn off colors
 
 alias la='l --almost-all'
-alias ld='l -ld'
-alias ll='l -l' 
+alias ld='l -ldh'
+alias ll='l -lh' 
 alias lh='l -lh'
 
-alias lal='l -l --almost-all'
-alias lla='l -l --almost-all'
-alias llh='l -lh'
-alias lah='l -h --almost-all'
-alias lalh='l -lh --almost-all'
-alias llah='l -lh --almost-all'
+alias lal='l -lh --almost-all'
+alias lla='lal'
+alias llh='ll'
 
 # alias wl='wc -l'
 alias fm='free -m'
 alias c='cd'
-alias ping='ping -c 1'
+# alias ping='ping -c 1'
 
 # Sed
-alias sed='/bin/sed --follow-symlinks'
+alias sedf='/bin/sed --follow-symlinks'
 
 ### Curl aliases ###
 ### Ref - http://curl.haxx.se/docs/manpage.html
-alias curli='curl -I'
-alias curlih='curl -I -H "Accept-Encoding:gzip,deflate"'
+# alias curli='curl -I'
+# alias curlih='curl -I -H "Accept-Encoding:gzip,deflate"'
 alias curld='curl -H "Accept-Encoding:gzip,deflate" -s -D- -o /dev/null'
 
 # Explanation for the above
@@ -95,3 +92,6 @@ zstyle ':completion:*' verbose true
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
+# alias to find the flag info
+# modified from https://coderwall.com/p/gtgxww/intuitive-flags-information-of-nginx
+alias ngx_flags='nginx -V 2>&1 | /bin/sed "s: --:\n\t&:g"'

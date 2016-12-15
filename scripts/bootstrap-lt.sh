@@ -8,11 +8,17 @@
 	# exit 1
 # fi
 
-mkdir ~/{backups,git,log,others,scripts,src,tmp} &> /dev/null
+# TODO - change the default repo, if needed - mostly not needed on most hosts
+
+# take a backup
+mkdir -p /root/{backups,git,log,others,scripts,src,tmp} &> /dev/null
+
+LOG_FILE=/root/log/linux-tweaks.log
+exec > >(tee -a ${LOG_FILE} )
+exec 2> >(tee -a ${LOG_FILE} >&2)
 
 # take a backup
 echo 'Taking an initial backup'
-echo 'Taking an initial backup' >> /root/log/linux-tweaks.log
 LT_DIRECTORY="/root/backups/etc-linux-tweaks-centos7-before-$(date +%F)"
 if [ ! -d "$LT_DIRECTORY" ]; then
 	cp -a /etc $LT_DIRECTORY
@@ -20,66 +26,74 @@ fi
 
 # install dependencies
 echo 'Updating the server'
-echo 'Updating the server' >> /root/log/linux-tweaks.log
-yum update -y -q &>> /root/log/linux-tweaks.log
-
+yum update -y -q
 
 echo 'Install prerequisites'
-echo 'Install prerequisites' >> /root/log/linux-tweaks.log
-yum install -y epel-release &>> /root/log/linux-tweaks.log
+yum install -y epel-release
+
 yum install -y zsh zsh-html \
+	vim vim-enhanced \
 	tmux \
 	gcc \
 	git subversion \
-	vim vim-enhanced \
-	bind-utils \
+	python-pip \
+	fail2ban-firewalld fail2ban-systemd \
 	zip unzip \
 	mlocate \
-	python-pip \
 	logwatch postfix \
-	fail2ban-firewalld fail2ban-systemd \
-	ruby ruby-gems ruby-devel libxml2-devel libxslt-devel gcc-c++ \
 	yum-cron \
-	&>> /root/log/linux-tweaks.log
-
+	bind-utils \
+    redis-server
 
 echo 'Install AWS CLI tools'
-echo 'Install AWS CLI tools' >> /root/log/linux-tweaks.log
-pip install awscli &>> /root/log/linux-tweaks.log
+pip install awscli
 
+# setup timezone
+timedatectl set-timezone UTC
+if [ $? != 0 ]; then
+	echo 'Error setting up timezone'
+fi
 
 # get the source from Github
-echo 'Downloading Linux Tweaks from Github repo'
-echo 'Downloading Linux Tweaks from Github repo' &>> /root/log/linux-tweaks.log
-rm -rf ~/ltc &> /dev/null
-git clone --recursive https://github.com/pothi/linux-tweaks-centos.git ~/ltc &>> /root/log/linux-tweaks.log
+LTREPO=https://github.com/pothi/linux-tweaks-centos.git
+echo 'Downloading Linux Tweaks from Github repo at '$LTREPO
+rm -rf /root/ltweaks &> /dev/null
+git clone --recursive $LTREPO ~/ltweaks
 
 # Shell related configs
-cp ~/ltc/tiny_* /etc/profile.d/
-cat ~/ltc/zprofile >> /etc/zprofile
-cat ~/ltc/zshrc >> /etc/zshrc
+cp /root/ltweaks/tiny_* /etc/profile.d/
+
+cat /root/ltweaks/zprofile >> /etc/zprofile
+cat /root/ltweaks/zshrc >> /etc/zshrc
 
 # Vim related configs
-cat ~/ltc/vimrc.local >> /etc/vimrc
-cp -a ~/ltc/vim/* /usr/share/vim/vim74/
+cp /root/ltweaks/vimrc.local /etc/vim/
+cp -a /root/ltweaks/vim/* /usr/share/vim/vim74/
 
 # Misc files
-cat ~/ltc/tmux.conf > /etc/tmux.conf
-cat ~/ltc/gitconfig > /etc/gitconfig
+cat /root/ltweaks/tmux.conf > /etc/tmux.conf
+cat /root/ltweaks/gitconfig > /etc/gitconfig
 
 # Clean up
-rm -rf ~/ltc/
+rm -rf /root/ltweaks/
 
 
 # Common for all users
-echo 'Setting up skel directory'
-echo 'Setting up skel directory' >> /root/log/linux-tweaks.log
-touch /etc/skel/.viminfo &> /dev/null
-echo 'HISTFILE=~/log/zsh_history' > /etc/skel/.zshrc
-echo 'export EDITOR=vim' >> /etc/skel/.zshrc
-echo 'export VISUAL=vim' >> /etc/skel/.zshrc
+echo 'Setting up skel'
+touch /etc/skel/.viminfo
+touch /etc/skel/.zshrc
+if ! grep '# Custom Code - PK' /etc/skel/.zshrc ; then
+	echo '# Custom Code - PK' >> /etc/skel/.zshrc
+    echo 'HISTFILE=~/log/zsh_history' >> /etc/skel/.zshrc
+    echo 'export EDITOR=vim' >> /etc/skel/.zshrc
+    echo 'export VISUAL=vim' >> /etc/skel/.zshrc
+fi
 
-echo "set viminfo='10,\"100,:20,%,n/root/log/viminfo" > /etc/skel/.vimrc
+touch /etc/skel/.vimrc
+if ! grep '" Custom Code - PK' /etc/skel/.vimrc ; then
+	echo '" Custom Code - PK' >> /etc/skel/.vimrc
+	echo "set viminfo+=n~/log/viminfo" >> /etc/skel/.vimrc
+fi
 
 # Copy common files to root
 cp /etc/skel/.viminfo /root/
@@ -89,37 +103,38 @@ cp /etc/skel/.vimrc /root/
 
 # Change Shell
 echo 'Changing shell for root to ZSH'
-echo 'Changing shell for root to ZSH' >> /root/log/linux-tweaks.log
 chsh --shell /bin/zsh
 sed -i 's/bash/zsh/' /etc/default/useradd
 
 
-#### Update Pathogen (optional)
-echo 'Updating Pathogen (for VIM)'
-echo 'Updating Pathogen (for VIM)' >> /root/log/linux-tweaks.log
-curl -Sso /usr/share/vim/vim74/autoload/pathogen.vim https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim
-
-
 # Setup some helper tools
 echo 'Downloading ps_mem.py, mysqltuner and tuning-primer, etc'
-echo 'Downloading ps_mem.py, mysqltuner and tuning-primer, etc' >> /root/log/linux-tweaks.log
-wget -q -O /root/ps_mem.py http://www.pixelbeat.org/scripts/ps_mem.py && chmod +x /root/ps_mem.py &>> /root/log/linux-tweaks.log
-wget -q -O /root/scripts/mysqltuner.pl https://raw.github.com/major/MySQLTuner-perl/master/mysqltuner.pl && chmod +x /root/scripts/mysqltuner.pl &>> /root/log/linux-tweaks.log
-wget -q -O /root/scripts/tuning-primer.sh https://launchpad.net/mysql-tuning-primer/trunk/1.6-r1/+download/tuning-primer.sh && chmod +x /root/scripts/tuning-primer.sh &>> /root/log/linux-tweaks.log
 
+PSMEMURL=http://www.pixelbeat.org/scripts/ps_mem.py
+wget -q -O /root/ps_mem.py $PSMEMURL
+chmod +x /root/ps_mem.py
+
+TUNERURL=https://raw.github.com/major/MySQltuner-perl/master/mysqltuner.pl
+wget -q -O /root/scripts/mysqltuner.pl $TUNERURL
+chmod +x /root/scripts/mysqltuner.pl
+
+PRIMERURL=https://launchpad.net/mysql-tuning-primer/trunk/1.6-r1/+download/tuning-primer.sh
+wget -q -O /root/scripts/tuning-primer.sh $PRIMERURL
+chmod +x /root/scripts/tuning-primer.sh
 
 # Setup wp cli
 echo 'Setting up WP CLI'
-echo 'Setting up WP CLI' >> /root/log/linux-tweaks.log
-curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar &>> /root/log/linux-tweaks.log
-chmod +x wp-cli.phar &>> /root/log/linux-tweaks.log
-mv wp-cli.phar /usr/local/bin/wp &>> /root/log/linux-tweaks.log
-
+if [ ! -a /usr/local/bin/wp ]; then
+	echo 'Setting up WP CLI'
+	WPCLIURL=https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+	curl --silent -O $WPCLIURL
+	chmod +x wp-cli.phar
+	mv wp-cli.phar /usr/local/bin/wp
+fi
 
 # Setup fail2ban
 # ref: https://krash.be/node/28
 echo 'Setting up fail2ban'
-echo 'Setting up fail2ban' >> /root/log/linux-tweaks.log
 echo '[DEFAULT]
 findtime  = 5000
 [sshd]
@@ -133,20 +148,10 @@ systemctl start fail2ban
 
 # take a backup, after doing everything
 echo 'Taking a final backup'
-echo 'Taking a final backup' >> /root/log/linux-tweaks.log
 LT_DIRECTORY="/root/backups/etc-linux-tweaks-centos7-after-$(date +%F)"
 if [ ! -d "$LT_DIRECTORY" ]; then
 	cp -a /etc $LT_DIRECTORY
 fi
-
-
-echo 'Install Ruby Gems... please be patient'
-echo 'Install Ruby Gems... please be patient' >> /root/log/linux-tweaks.log
-gem install nokogiri -N &>> /root/log/linux-tweaks.log
-if [ "$?" == "0" ]; then
-	gem install backup -N &>> /root/log/linux-tweaks.log
-fi
-
 
 # logout and then login to see the changes
 echo 'All done.'

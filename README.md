@@ -1,7 +1,7 @@
 Linux-Tweaks
 ============
 
-Tweaks on bash, zsh, vim, tmux, etc on CentOS
+Tweaks on bash, zsh, vim, tmux, etc on CentOS 7
 
 ## Install procedure
 
