@@ -32,7 +32,7 @@ wget https://centos7.iuscommunity.org/ius-release.rpm
 rpm -Uvh ius-release*.rpm
 
 PHP_VER=70
-PHP_PACKAGES="php{PHP_VER}u-fpm php{PHP_VER}u-pecl-redis php{PHP_VER}u-mysqlnd php{PHP_VER}u-gd php{PHP_VER}u-mcrypt php{PHP_VER}u-xml php{PHP_VER}u-mbstring php{PHP_VER}u-curl"
+PHP_PACKAGES="php${PHP_VER}u-fpm php${PHP_VER}u-pecl-redis php${PHP_VER}u-mysqlnd php${PHP_VER}u-gd php${PHP_VER}u-mcrypt php${PHP_VER}u-xml php${PHP_VER}u-mbstring php${PHP_VER}u-curl"
 yum install -y 
 
 BPHP_DIRECTORY="/root/backups/etc-php-before-$(date +%F)"
